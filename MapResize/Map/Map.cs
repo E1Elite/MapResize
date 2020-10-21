@@ -38,6 +38,13 @@ public class Map
 
 	private Options options = new Options();
 
+	private int left;
+	private int right;
+	private int top;
+	private int bottom;
+	private int newMapWidth;
+	private int newMapHeight;
+
 	public Map() { }
 
 	public bool Initialize(string filename, Options opts)
@@ -581,10 +588,15 @@ public class Map
 		}
 	}
 
-	public void Resize(int top, int right, int bottom, int left)
+	public void Resize(int topValue, int rightValue, int bottomValue, int leftValue)
 	{
-		int newMapWidth = MapWidth + left + right;
-		int newMapHeight = MapHeight + top + bottom;
+		left = leftValue;
+		right = rightValue;
+		top = topValue;
+		bottom = bottomValue;
+
+		newMapWidth = MapWidth + left + right;
+		newMapHeight = MapHeight + top + bottom;
 
 		log.Info("Expected new map size: " + newMapWidth + "x" + newMapHeight);
 		coordList.Clear();
@@ -599,11 +611,11 @@ public class Map
 				coordList.Add(Tuple.Create(rx, ry));
 			}
 		}
-		UpdateXYSections(left, top, right, bottom, newMapWidth, newMapHeight);
-		UpdateMapSections(newMapWidth, newMapHeight);
+		UpdateXYSections();
+		UpdateMapSections();
 	}
 
-	private void UpdateXYSections(int left, int top, int right, int bottom, int width, int height)
+	private void UpdateXYSections()
 	{
 		List<Aircraft> aircraftsNew = new List<Aircraft>();
 		List<Infantry> infantriesNew = new List<Infantry>();
@@ -688,11 +700,14 @@ public class Map
 				tunnelLinesNew.Add(tunnelLine);
 		}
 
+		List<int> removedWaypoints = new List<int>();
 		foreach (Waypoint waypoint in waypoints)
 		{
 			waypoint.UpdateXY(left, top, right, bottom);
 			if (coordList.Contains(Tuple.Create(waypoint.MapX, waypoint.MapY)))
 				waypointsNew.Add(waypoint);
+			else
+				removedWaypoints.Add(waypoint.Number);
 		}
 		if (!options.RemOutsideWaypoints)
 		{
@@ -711,6 +726,14 @@ public class Map
 					bottomCellIndex++;
 					waypointsNew.Add(waypoint);
 				}
+			}
+		}
+		else
+		{
+			if (removedWaypoints != null && removedWaypoints.Count > 0)
+			{
+				foreach (int rwp in  removedWaypoints)
+					log.Info("Waypoint removed: " + rwp);
 			}
 		}
 
@@ -772,7 +795,7 @@ public class Map
 		baseNodes.AddRange(baseNodesNew);
 	}
 
-	public void UpdateMapSections(int width, int height)
+	public void UpdateMapSections()
 	{
 		int index = 0;
 		MapSection section = GetSection("Aircraft");
@@ -930,10 +953,29 @@ public class Map
 		section = GetSection("Map");
 		if (section != null)
 		{
-			string mapLocalSize = Convert.ToString(localSize[0]) + "," + Convert.ToString(localSize[1]) + "," +
-				Convert.ToString(width - localSize[4]) + "," + Convert.ToString(height - localSize[5]);
-			sizeEntries.Add("Size", "0,0," + width + "," + height);
+			int localX = localSize[0];
+			int localY = localSize[1];
+			int localWidth = newMapWidth - localSize[4];
+			int localHeight = newMapHeight - localSize[5];
+
+			sizeEntries.Add("Size", "0,0," + newMapWidth + "," + newMapHeight);
+			if (left >= 0 && top >= 0 && right >= 0 && bottom >= 0 && options.MaintainLocalSize)
+			{
+				localX = localSize[0] + left;
+				localY = localSize[1] + top;
+				localWidth = newMapWidth - localSize[4] - right - left;
+				localHeight = newMapHeight - localSize[5] - bottom - top;
+			}
+
+			if (localX < 1) localX = 1;
+			if (localY < 2) localY = 2;
+			if (localWidth < 1) localWidth = 1;
+			if (localHeight < 2) localHeight = 2;
+
+			string mapLocalSize = Convert.ToString(localX) + "," + Convert.ToString(localY) + "," +
+				Convert.ToString(localWidth) + "," + Convert.ToString(localHeight);
 			sizeEntries.Add("LocalSize", mapLocalSize);
+
 			section.Merge(sizeEntries);
 		}
 	}

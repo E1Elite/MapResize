@@ -90,8 +90,14 @@ namespace MapResize
 					wNew = width + (int)numLeft.Value + (int)numRight.Value;
 					hNew = height + (int)numTop.Value + (int)numBottom.Value;
 					sizeValue += "Expected new size: " + wNew + "x" + hNew + "\r\n";
-					if (wNew + hNew > 512)
+					if (wNew > 511 || hNew > 511)
+						sizeValue += "Max size limit of W or H is 511\r\n";
+					else if (wNew + hNew > 512)
 						sizeValue += "Max size game limit W+H=512\r\n";
+					if (wNew < 0 && hNew < 0)
+						sizeValue += "Map size in negative\r\n";
+					else if (wNew < 20 && hNew < 20)
+						sizeValue += "Map size too small\r\n";
 				}
 				tbCurrentSize.Text += sizeValue;
 			}
@@ -108,6 +114,7 @@ namespace MapResize
 				RemOutsideWaypoints = cbWaypointRem.Checked,
 				KeepL0ClearTiles = cbL0ClearTiles.Checked,
 				BetterTilesPackCompression = cbTilesCompress.Checked,
+				MaintainLocalSize = cbLocalSizePos.Checked,
 			};
 
 			tbCurrentSize.Text = "Processing ...\r\n";
@@ -115,8 +122,9 @@ namespace MapResize
 			if (map.Initialize(filename, options))
 			{
 				tbCurrentSize.Text += "Initializing map: " + filenameForUI + "\r\n";
-				map.Resize((int)numTop.Value, (int)numRight.Value, (int)numBottom.Value, (int)numLeft.Value);
-				try {
+				try
+				{
+					map.Resize((int)numTop.Value, (int)numRight.Value, (int)numBottom.Value, (int)numLeft.Value);
 					string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
 					string fileInputNoExtn = Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename));
 					fileInputNoExtn = fileInputNoExtn.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
@@ -124,10 +132,10 @@ namespace MapResize
 					map.Save(newFilename);
 					sizeValue += "Resized map: " + Path.GetFileName(newFilename) + ".\r\nDone.";
 				}
-				catch (Exception)
+				catch (Exception ex)
 				{
-					log.Error("Unable to generate resized map file!");
-					sizeValue += "Error in saving map.\r\n";
+					log.Error("Unable to generate resized map file!\r\n" + ex.ToString());
+					sizeValue += "Error in resizing/saving map. Check log.\r\n";
 				}
 			}
 			else

@@ -43,7 +43,7 @@ public class MapParser
 										if (!String.IsNullOrEmpty(value) && !sectionEntries.ContainsKey(key) && !sectionEntries.ContainsValue(value))
 											sectionEntries.Add(key, value);
 										else
-											log.Info("Skipping [" + currentSection.Name + "] " + key);
+											log.Info("Skipping [" + currentSection.Name + "] index: " + key);
 									}
 									else
 									{

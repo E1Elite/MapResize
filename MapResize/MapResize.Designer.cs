@@ -48,6 +48,7 @@
             this.cbL0ClearTiles = new System.Windows.Forms.CheckBox();
             this.ttTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.cbTilesCompress = new System.Windows.Forms.CheckBox();
+            this.cbLocalSizePos = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numTop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBottom)).BeginInit();
@@ -57,7 +58,7 @@
             // lblMap
             // 
             this.lblMap.AutoSize = true;
-            this.lblMap.Location = new System.Drawing.Point(10, 18);
+            this.lblMap.Location = new System.Drawing.Point(10, 12);
             this.lblMap.Name = "lblMap";
             this.lblMap.Size = new System.Drawing.Size(34, 13);
             this.lblMap.TabIndex = 0;
@@ -66,7 +67,7 @@
             // tbFilename
             // 
             this.tbFilename.AllowDrop = true;
-            this.tbFilename.Location = new System.Drawing.Point(12, 41);
+            this.tbFilename.Location = new System.Drawing.Point(12, 35);
             this.tbFilename.Name = "tbFilename";
             this.tbFilename.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbFilename.Size = new System.Drawing.Size(560, 20);
@@ -84,7 +85,7 @@
             // lblTop
             // 
             this.lblTop.AutoSize = true;
-            this.lblTop.Location = new System.Drawing.Point(241, 74);
+            this.lblTop.Location = new System.Drawing.Point(241, 68);
             this.lblTop.Name = "lblTop";
             this.lblTop.Size = new System.Drawing.Size(26, 13);
             this.lblTop.TabIndex = 2;
@@ -93,7 +94,7 @@
             // lblLeft
             // 
             this.lblLeft.AutoSize = true;
-            this.lblLeft.Location = new System.Drawing.Point(60, 153);
+            this.lblLeft.Location = new System.Drawing.Point(60, 147);
             this.lblLeft.Name = "lblLeft";
             this.lblLeft.Size = new System.Drawing.Size(25, 13);
             this.lblLeft.TabIndex = 3;
@@ -102,7 +103,7 @@
             // lblRight
             // 
             this.lblRight.AutoSize = true;
-            this.lblRight.Location = new System.Drawing.Point(421, 153);
+            this.lblRight.Location = new System.Drawing.Point(421, 147);
             this.lblRight.Name = "lblRight";
             this.lblRight.Size = new System.Drawing.Size(32, 13);
             this.lblRight.TabIndex = 4;
@@ -111,7 +112,7 @@
             // lblBottom
             // 
             this.lblBottom.AutoSize = true;
-            this.lblBottom.Location = new System.Drawing.Point(236, 280);
+            this.lblBottom.Location = new System.Drawing.Point(236, 274);
             this.lblBottom.Name = "lblBottom";
             this.lblBottom.Size = new System.Drawing.Size(40, 13);
             this.lblBottom.TabIndex = 5;
@@ -119,7 +120,7 @@
             // 
             // tbCurrentSize
             // 
-            this.tbCurrentSize.Location = new System.Drawing.Point(142, 125);
+            this.tbCurrentSize.Location = new System.Drawing.Point(142, 119);
             this.tbCurrentSize.Multiline = true;
             this.tbCurrentSize.Name = "tbCurrentSize";
             this.tbCurrentSize.ReadOnly = true;
@@ -129,7 +130,7 @@
             // 
             // numTop
             // 
-            this.numTop.Location = new System.Drawing.Point(212, 94);
+            this.numTop.Location = new System.Drawing.Point(212, 88);
             this.numTop.Maximum = new decimal(new int[] {
             511,
             0,
@@ -148,7 +149,7 @@
             // 
             // numRight
             // 
-            this.numRight.Location = new System.Drawing.Point(395, 174);
+            this.numRight.Location = new System.Drawing.Point(395, 168);
             this.numRight.Maximum = new decimal(new int[] {
             511,
             0,
@@ -167,7 +168,7 @@
             // 
             // numBottom
             // 
-            this.numBottom.Location = new System.Drawing.Point(212, 252);
+            this.numBottom.Location = new System.Drawing.Point(212, 246);
             this.numBottom.Maximum = new decimal(new int[] {
             511,
             0,
@@ -186,7 +187,7 @@
             // 
             // numLeft
             // 
-            this.numLeft.Location = new System.Drawing.Point(30, 174);
+            this.numLeft.Location = new System.Drawing.Point(30, 168);
             this.numLeft.Maximum = new decimal(new int[] {
             511,
             0,
@@ -205,7 +206,7 @@
             // 
             // btnReadMap
             // 
-            this.btnReadMap.Location = new System.Drawing.Point(460, 252);
+            this.btnReadMap.Location = new System.Drawing.Point(460, 278);
             this.btnReadMap.Name = "btnReadMap";
             this.btnReadMap.Size = new System.Drawing.Size(108, 32);
             this.btnReadMap.TabIndex = 11;
@@ -215,7 +216,7 @@
             // 
             // btnResize
             // 
-            this.btnResize.Location = new System.Drawing.Point(460, 318);
+            this.btnResize.Location = new System.Drawing.Point(460, 348);
             this.btnResize.Name = "btnResize";
             this.btnResize.Size = new System.Drawing.Size(108, 32);
             this.btnResize.TabIndex = 12;
@@ -225,7 +226,7 @@
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(460, 72);
+            this.btnBrowse.Location = new System.Drawing.Point(460, 66);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(108, 32);
             this.btnBrowse.TabIndex = 13;
@@ -236,7 +237,7 @@
             // cbWaypointRem
             // 
             this.cbWaypointRem.AutoSize = true;
-            this.cbWaypointRem.Location = new System.Drawing.Point(29, 300);
+            this.cbWaypointRem.Location = new System.Drawing.Point(29, 294);
             this.cbWaypointRem.Name = "cbWaypointRem";
             this.cbWaypointRem.Size = new System.Drawing.Size(270, 17);
             this.cbWaypointRem.TabIndex = 14;
@@ -248,7 +249,7 @@
             // cbL0ClearTiles
             // 
             this.cbL0ClearTiles.AutoSize = true;
-            this.cbL0ClearTiles.Location = new System.Drawing.Point(29, 324);
+            this.cbL0ClearTiles.Location = new System.Drawing.Point(29, 318);
             this.cbL0ClearTiles.Name = "cbL0ClearTiles";
             this.cbL0ClearTiles.Size = new System.Drawing.Size(274, 17);
             this.cbL0ClearTiles.TabIndex = 15;
@@ -261,7 +262,7 @@
             this.cbTilesCompress.AutoSize = true;
             this.cbTilesCompress.Checked = true;
             this.cbTilesCompress.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbTilesCompress.Location = new System.Drawing.Point(29, 348);
+            this.cbTilesCompress.Location = new System.Drawing.Point(29, 342);
             this.cbTilesCompress.Name = "cbTilesCompress";
             this.cbTilesCompress.Size = new System.Drawing.Size(164, 17);
             this.cbTilesCompress.TabIndex = 16;
@@ -269,10 +270,22 @@
             this.ttTooltip.SetToolTip(this.cbTilesCompress, "A bit slower.");
             this.cbTilesCompress.UseVisualStyleBackColor = true;
             // 
+            // cbLocalSizePos
+            // 
+            this.cbLocalSizePos.AutoSize = true;
+            this.cbLocalSizePos.Location = new System.Drawing.Point(29, 366);
+            this.cbLocalSizePos.Name = "cbLocalSizePos";
+            this.cbLocalSizePos.Size = new System.Drawing.Size(271, 17);
+            this.cbLocalSizePos.TabIndex = 17;
+            this.cbLocalSizePos.Text = "Maintain LocalSize position (on non-negative inputs)";
+            this.ttTooltip.SetToolTip(this.cbLocalSizePos, "Maintain visible map position on size increase.");
+            this.cbLocalSizePos.UseVisualStyleBackColor = true;
+            // 
             // frmMapResize
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(584, 372);
+            this.ClientSize = new System.Drawing.Size(584, 394);
+            this.Controls.Add(this.cbLocalSizePos);
             this.Controls.Add(this.cbTilesCompress);
             this.Controls.Add(this.cbL0ClearTiles);
             this.Controls.Add(this.cbWaypointRem);
@@ -324,6 +337,7 @@
         private System.Windows.Forms.CheckBox cbL0ClearTiles;
         private System.Windows.Forms.ToolTip ttTooltip;
         private System.Windows.Forms.CheckBox cbTilesCompress;
+        private System.Windows.Forms.CheckBox cbLocalSizePos;
     }
 }
 
