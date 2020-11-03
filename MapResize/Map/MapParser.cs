@@ -43,7 +43,7 @@ public class MapParser
 										if (!String.IsNullOrEmpty(value) && !sectionEntries.ContainsKey(key) && !sectionEntries.ContainsValue(value))
 											sectionEntries.Add(key, value);
 										else
-											log.Info("Skipping [" + currentSection.Name + "] index: " + key);
+											log.Info("Skipping [" + currentSection.Name + "] index: " + key + "=" + value);
 									}
 									else
 									{
@@ -106,6 +106,9 @@ public class MapParser
 		string value = "Error: Unable to find map size.";
 		if (!String.IsNullOrEmpty(mapname) && File.Exists(mapname))
 		{
+			log.Info("\r\n#############################################");
+			log.Info("Reading map for size calculation: " + mapname);
+
 			List<string> mapLines = CleanUp(File.ReadAllLines(mapname));
 			if (mapLines.Count > 0)
 			{

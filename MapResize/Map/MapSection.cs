@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
+using NLog;
 
 public class MapSection
 {
+	static Logger log = LogManager.GetCurrentClassLogger();
+
 	public string Name { get; set; }
 	public Dictionary<string, string> Entries { get; set; }
 
@@ -19,8 +22,10 @@ public class MapSection
 			{
 				if (isTypeList)
 				{
-					if (!Entries.ContainsKey(newEntry.Key) || !Entries.ContainsValue(newEntry.Value))
+					if (!String.IsNullOrEmpty(newEntry.Value) && !Entries.ContainsKey(newEntry.Key) && !Entries.ContainsValue(newEntry.Value))
 						Entries.Add(newEntry.Key, newEntry.Value);
+					else
+						log.Info("Merge section skipping [" + Name + "] index: " + newEntry.Key + "=" + newEntry.Value);
 				}
 				else
 				{

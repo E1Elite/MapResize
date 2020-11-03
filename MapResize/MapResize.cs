@@ -27,16 +27,16 @@ namespace MapResize
 			var logconfig = new LoggingConfiguration();
 			var logdir = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Log") + Path.DirectorySeparatorChar;
 			var logfile = new FileTarget("logfile")
-				{
-					FileName = logdir + "log.txt",
-					Layout = "${longdate} ${level}: ${message}",
-					CreateDirs = true,
-					ArchiveFileName = logdir + "log_{##}.txt",
-					ArchiveNumbering = ArchiveNumberingMode.DateAndSequence,
-					ArchiveDateFormat = "yyyyMMddHHmmss",
-					ArchiveOldFileOnStartup = true,
-					MaxArchiveFiles = 24,
-				};
+			{
+				FileName = logdir + "log.txt",
+				Layout = "${longdate} ${level}: ${message}",
+				CreateDirs = true,
+				ArchiveFileName = logdir + "log_{##}.txt",
+				ArchiveNumbering = ArchiveNumberingMode.DateAndSequence,
+				ArchiveDateFormat = "yyyyMMddHHmmss",
+				ArchiveOldFileOnStartup = true,
+				MaxArchiveFiles = 24,
+			};
 			#if DEBUG
 			logconfig.AddRuleForAllLevels(logfile);
 			#else
@@ -70,7 +70,6 @@ namespace MapResize
 			MapParser parser = new MapParser();
 			string sizeValue = parser.GetMapSize(tbFilename.Text.Trim());
 			tbCurrentSize.Text = "";
-			log.Info("Reading map");
 			if (!String.IsNullOrEmpty(sizeValue))
 			{
 				if (sizeValue.Contains("|"))
@@ -94,9 +93,9 @@ namespace MapResize
 						sizeValue += "Max size limit of W or H is 511\r\n";
 					else if (wNew + hNew > 512)
 						sizeValue += "Max size game limit W+H=512\r\n";
-					if (wNew < 0 && hNew < 0)
+					if (wNew < 0 || hNew < 0)
 						sizeValue += "Map size in negative\r\n";
-					else if (wNew < 20 && hNew < 20)
+					else if ((wNew * 2 - 1) * hNew < 780)
 						sizeValue += "Map size too small\r\n";
 				}
 				tbCurrentSize.Text += sizeValue;
@@ -106,31 +105,79 @@ namespace MapResize
         private void btnResize_Click(object sender, EventArgs e)
         {
 			Map map = new Map();
-			string filename = tbFilename.Text.Trim();
+			string filename = "";
+			string filenameForUI = "";
 			string sizeValue = "";
-			string filenameForUI = Path.GetFileName(filename);
+			string mapName = "";
+
+			if (!String.IsNullOrEmpty(tbFilename.Text.Trim()))
+				filename = Path.GetFullPath(tbFilename.Text.Trim());
+			if (!String.IsNullOrEmpty(filename))
+				filenameForUI =  Path.GetFileName(filename);
+			if (!String.IsNullOrEmpty(tbMapName.Text.Trim()))
+				mapName = tbMapName.Text.Trim();
+
 			Options options = new Options
 			{
 				RemOutsideWaypoints = cbWaypointRem.Checked,
 				KeepL0ClearTiles = cbL0ClearTiles.Checked,
 				BetterTilesPackCompression = cbTilesCompress.Checked,
 				MaintainLocalSize = cbLocalSizePos.Checked,
+				MapName = mapName,
 			};
 
 			tbCurrentSize.Text = "Processing ...\r\n";
 			btnResize.Enabled = false;
-			if (map.Initialize(filename, options))
+			if (!String.IsNullOrEmpty(filename) && map.Initialize(filename, options))
 			{
 				tbCurrentSize.Text += "Initializing map: " + filenameForUI + "\r\n";
 				try
 				{
 					map.Resize((int)numTop.Value, (int)numRight.Value, (int)numBottom.Value, (int)numLeft.Value);
-					string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
-					string fileInputNoExtn = Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename));
-					fileInputNoExtn = fileInputNoExtn.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-					string newFilename = fileInputNoExtn + "_" + timestamp + Path.GetExtension(filename);
-					map.Save(newFilename);
-					sizeValue += "Resized map: " + Path.GetFileName(newFilename) + ".\r\nDone.";
+					if (rbSaveTo.Checked)
+					{
+						string saveToFilename = Path.GetFullPath(tbSaveTo.Text.Trim());
+                        if (Directory.Exists(Path.GetDirectoryName(saveToFilename)))
+						{
+							filenameForUI = Path.GetFileName(saveToFilename);
+							if (!File.Exists(saveToFilename))
+							{
+								map.Save(saveToFilename);
+								sizeValue += "Resized map: " + filenameForUI + ".\r\nDone.";
+							}
+							else
+							{
+								var dialogResult = MessageBox.Show("Overwrite " + filenameForUI + "?", "File exists!", 
+									MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+								if (dialogResult == DialogResult.Yes)
+								{
+									map.Save(saveToFilename);
+									sizeValue += "Resized map: " + filenameForUI + ".\r\nDone.";
+								}
+							}
+						}
+						else
+						{
+							log.Error("Unable to find directory to save!\r\n");
+							sizeValue += "Error in finding directory path.\r\n";
+							throw new Exception("Invalid save path.");
+						}
+					}
+					else if (rbOverwrite.Checked)
+					{
+						map.Save(filename);
+						sizeValue += "Resized map: " + filenameForUI + ".\r\nDone.";
+					}
+					else
+					{
+						string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+						string fileInputNoExtn = Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename));
+						fileInputNoExtn = fileInputNoExtn.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+						string newFilename = fileInputNoExtn + "_" + timestamp + Path.GetExtension(filename);
+						map.Save(newFilename);
+						filenameForUI = Path.GetFileName(newFilename);
+						sizeValue += "Resized map: " + filenameForUI + ".\r\nDone.";
+					}
 				}
 				catch (Exception ex)
 				{
@@ -139,7 +186,7 @@ namespace MapResize
 				}
 			}
 			else
-				sizeValue += "Error: Unable to initialize " + filenameForUI + "\r\nCheck log.";
+				sizeValue += "Error: Unable to initialize " + filenameForUI + "\r\n";
 			tbCurrentSize.Text += sizeValue;
 			btnResize.Enabled = true;
 		}
@@ -162,8 +209,33 @@ namespace MapResize
 			if (ofdBrowse.ShowDialog() == DialogResult.OK)
 			{
 				tbFilename.Text = ofdBrowse.FileName;
+				tbSaveTo.Text = tbFilename.Text;
 				ofdBrowse.InitialDirectory = Path.GetDirectoryName(ofdBrowse.FileName);
+				tbMapName.Text = "";
 			}
         }
+
+        private void rbNewFile_CheckedChanged(object sender, EventArgs e)
+        {
+			updateSaveTo();
+        }
+
+        private void rbOverwrite_CheckedChanged(object sender, EventArgs e)
+        {
+			updateSaveTo();
+        }
+
+        private void rbSaveTo_CheckedChanged(object sender, EventArgs e)
+        {
+			updateSaveTo();
+        }
+
+        private void updateSaveTo()
+		{
+			if (rbNewFile.Checked || rbOverwrite.Checked)
+				tbSaveTo.Enabled = false;
+			else if (rbSaveTo.Checked)
+				tbSaveTo.Enabled = true;
+		}
     }
 }

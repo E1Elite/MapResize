@@ -49,6 +49,12 @@
             this.ttTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.cbTilesCompress = new System.Windows.Forms.CheckBox();
             this.cbLocalSizePos = new System.Windows.Forms.CheckBox();
+            this.lblMapName = new System.Windows.Forms.Label();
+            this.rbNewFile = new System.Windows.Forms.RadioButton();
+            this.rbOverwrite = new System.Windows.Forms.RadioButton();
+            this.rbSaveTo = new System.Windows.Forms.RadioButton();
+            this.tbMapName = new System.Windows.Forms.TextBox();
+            this.tbSaveTo = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numTop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBottom)).BeginInit();
@@ -58,7 +64,7 @@
             // lblMap
             // 
             this.lblMap.AutoSize = true;
-            this.lblMap.Location = new System.Drawing.Point(10, 12);
+            this.lblMap.Location = new System.Drawing.Point(10, 10);
             this.lblMap.Name = "lblMap";
             this.lblMap.Size = new System.Drawing.Size(34, 13);
             this.lblMap.TabIndex = 0;
@@ -67,10 +73,10 @@
             // tbFilename
             // 
             this.tbFilename.AllowDrop = true;
-            this.tbFilename.Location = new System.Drawing.Point(12, 35);
+            this.tbFilename.Location = new System.Drawing.Point(12, 33);
             this.tbFilename.Name = "tbFilename";
             this.tbFilename.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbFilename.Size = new System.Drawing.Size(560, 20);
+            this.tbFilename.Size = new System.Drawing.Size(600, 20);
             this.tbFilename.TabIndex = 1;
             this.tbFilename.TextChanged += new System.EventHandler(this.tbFilename_TextChanged);
             // 
@@ -85,7 +91,7 @@
             // lblTop
             // 
             this.lblTop.AutoSize = true;
-            this.lblTop.Location = new System.Drawing.Point(241, 68);
+            this.lblTop.Location = new System.Drawing.Point(261, 60);
             this.lblTop.Name = "lblTop";
             this.lblTop.Size = new System.Drawing.Size(26, 13);
             this.lblTop.TabIndex = 2;
@@ -94,7 +100,7 @@
             // lblLeft
             // 
             this.lblLeft.AutoSize = true;
-            this.lblLeft.Location = new System.Drawing.Point(60, 147);
+            this.lblLeft.Location = new System.Drawing.Point(60, 139);
             this.lblLeft.Name = "lblLeft";
             this.lblLeft.Size = new System.Drawing.Size(25, 13);
             this.lblLeft.TabIndex = 3;
@@ -103,7 +109,7 @@
             // lblRight
             // 
             this.lblRight.AutoSize = true;
-            this.lblRight.Location = new System.Drawing.Point(421, 147);
+            this.lblRight.Location = new System.Drawing.Point(461, 139);
             this.lblRight.Name = "lblRight";
             this.lblRight.Size = new System.Drawing.Size(32, 13);
             this.lblRight.TabIndex = 4;
@@ -112,7 +118,7 @@
             // lblBottom
             // 
             this.lblBottom.AutoSize = true;
-            this.lblBottom.Location = new System.Drawing.Point(236, 274);
+            this.lblBottom.Location = new System.Drawing.Point(256, 266);
             this.lblBottom.Name = "lblBottom";
             this.lblBottom.Size = new System.Drawing.Size(40, 13);
             this.lblBottom.TabIndex = 5;
@@ -120,17 +126,17 @@
             // 
             // tbCurrentSize
             // 
-            this.tbCurrentSize.Location = new System.Drawing.Point(142, 119);
+            this.tbCurrentSize.Location = new System.Drawing.Point(142, 111);
             this.tbCurrentSize.Multiline = true;
             this.tbCurrentSize.Name = "tbCurrentSize";
             this.tbCurrentSize.ReadOnly = true;
             this.tbCurrentSize.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbCurrentSize.Size = new System.Drawing.Size(240, 116);
+            this.tbCurrentSize.Size = new System.Drawing.Size(280, 116);
             this.tbCurrentSize.TabIndex = 6;
             // 
             // numTop
             // 
-            this.numTop.Location = new System.Drawing.Point(212, 88);
+            this.numTop.Location = new System.Drawing.Point(232, 80);
             this.numTop.Maximum = new decimal(new int[] {
             511,
             0,
@@ -149,7 +155,7 @@
             // 
             // numRight
             // 
-            this.numRight.Location = new System.Drawing.Point(395, 168);
+            this.numRight.Location = new System.Drawing.Point(435, 160);
             this.numRight.Maximum = new decimal(new int[] {
             511,
             0,
@@ -168,7 +174,7 @@
             // 
             // numBottom
             // 
-            this.numBottom.Location = new System.Drawing.Point(212, 246);
+            this.numBottom.Location = new System.Drawing.Point(232, 238);
             this.numBottom.Maximum = new decimal(new int[] {
             511,
             0,
@@ -187,7 +193,7 @@
             // 
             // numLeft
             // 
-            this.numLeft.Location = new System.Drawing.Point(30, 168);
+            this.numLeft.Location = new System.Drawing.Point(30, 160);
             this.numLeft.Maximum = new decimal(new int[] {
             511,
             0,
@@ -206,7 +212,7 @@
             // 
             // btnReadMap
             // 
-            this.btnReadMap.Location = new System.Drawing.Point(460, 278);
+            this.btnReadMap.Location = new System.Drawing.Point(500, 225);
             this.btnReadMap.Name = "btnReadMap";
             this.btnReadMap.Size = new System.Drawing.Size(108, 32);
             this.btnReadMap.TabIndex = 11;
@@ -216,7 +222,7 @@
             // 
             // btnResize
             // 
-            this.btnResize.Location = new System.Drawing.Point(460, 348);
+            this.btnResize.Location = new System.Drawing.Point(500, 396);
             this.btnResize.Name = "btnResize";
             this.btnResize.Size = new System.Drawing.Size(108, 32);
             this.btnResize.TabIndex = 12;
@@ -226,7 +232,7 @@
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(460, 66);
+            this.btnBrowse.Location = new System.Drawing.Point(500, 64);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(108, 32);
             this.btnBrowse.TabIndex = 13;
@@ -237,11 +243,11 @@
             // cbWaypointRem
             // 
             this.cbWaypointRem.AutoSize = true;
-            this.cbWaypointRem.Location = new System.Drawing.Point(29, 294);
+            this.cbWaypointRem.Location = new System.Drawing.Point(16, 288);
             this.cbWaypointRem.Name = "cbWaypointRem";
-            this.cbWaypointRem.Size = new System.Drawing.Size(270, 17);
+            this.cbWaypointRem.Size = new System.Drawing.Size(176, 17);
             this.cbWaypointRem.TabIndex = 14;
-            this.cbWaypointRem.Text = "Remove waypoints outside map when reducing size";
+            this.cbWaypointRem.Text = "Remove waypoints outside map";
             this.ttTooltip.SetToolTip(this.cbWaypointRem, "Remove if those waypoints don\'t have any references.\r\nOtherwise by default, those" +
         " are put at the bottom of the map.");
             this.cbWaypointRem.UseVisualStyleBackColor = true;
@@ -249,11 +255,11 @@
             // cbL0ClearTiles
             // 
             this.cbL0ClearTiles.AutoSize = true;
-            this.cbL0ClearTiles.Location = new System.Drawing.Point(29, 318);
+            this.cbL0ClearTiles.Location = new System.Drawing.Point(16, 312);
             this.cbL0ClearTiles.Name = "cbL0ClearTiles";
-            this.cbL0ClearTiles.Size = new System.Drawing.Size(274, 17);
+            this.cbL0ClearTiles.Size = new System.Drawing.Size(132, 17);
             this.cbL0ClearTiles.TabIndex = 15;
-            this.cbL0ClearTiles.Text = "Keep level 0 clear tiles during tiles pack compression";
+            this.cbL0ClearTiles.Text = "Keep level 0 clear tiles";
             this.ttTooltip.SetToolTip(this.cbL0ClearTiles, "Removing those gives better IsoMapPack5 compression.");
             this.cbL0ClearTiles.UseVisualStyleBackColor = true;
             // 
@@ -262,7 +268,7 @@
             this.cbTilesCompress.AutoSize = true;
             this.cbTilesCompress.Checked = true;
             this.cbTilesCompress.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbTilesCompress.Location = new System.Drawing.Point(29, 342);
+            this.cbTilesCompress.Location = new System.Drawing.Point(320, 288);
             this.cbTilesCompress.Name = "cbTilesCompress";
             this.cbTilesCompress.Size = new System.Drawing.Size(164, 17);
             this.cbTilesCompress.TabIndex = 16;
@@ -273,18 +279,90 @@
             // cbLocalSizePos
             // 
             this.cbLocalSizePos.AutoSize = true;
-            this.cbLocalSizePos.Location = new System.Drawing.Point(29, 366);
+            this.cbLocalSizePos.Location = new System.Drawing.Point(320, 312);
             this.cbLocalSizePos.Name = "cbLocalSizePos";
-            this.cbLocalSizePos.Size = new System.Drawing.Size(271, 17);
+            this.cbLocalSizePos.Size = new System.Drawing.Size(154, 17);
             this.cbLocalSizePos.TabIndex = 17;
-            this.cbLocalSizePos.Text = "Maintain LocalSize position (on non-negative inputs)";
-            this.ttTooltip.SetToolTip(this.cbLocalSizePos, "Maintain visible map position on size increase.");
+            this.cbLocalSizePos.Text = "Maintain LocalSize position";
+            this.ttTooltip.SetToolTip(this.cbLocalSizePos, "Maintain visible map position on non-negative resize inputs.");
             this.cbLocalSizePos.UseVisualStyleBackColor = true;
+            // 
+            // lblMapName
+            // 
+            this.lblMapName.AutoSize = true;
+            this.lblMapName.Location = new System.Drawing.Point(16, 400);
+            this.lblMapName.Name = "lblMapName";
+            this.lblMapName.Size = new System.Drawing.Size(63, 13);
+            this.lblMapName.TabIndex = 23;
+            this.lblMapName.Text = "Map name: ";
+            this.ttTooltip.SetToolTip(this.lblMapName, "Overwrite Name in [Basic] section. No change if left empty.");
+            // 
+            // rbNewFile
+            // 
+            this.rbNewFile.AutoSize = true;
+            this.rbNewFile.Checked = true;
+            this.rbNewFile.Location = new System.Drawing.Point(16, 338);
+            this.rbNewFile.Name = "rbNewFile";
+            this.rbNewFile.Size = new System.Drawing.Size(101, 17);
+            this.rbNewFile.TabIndex = 19;
+            this.rbNewFile.TabStop = true;
+            this.rbNewFile.Text = "Save to new file";
+            this.ttTooltip.SetToolTip(this.rbNewFile, "Save to auto generated filename with timestamp.");
+            this.rbNewFile.UseVisualStyleBackColor = true;
+            this.rbNewFile.CheckedChanged += new System.EventHandler(this.rbNewFile_CheckedChanged);
+            // 
+            // rbOverwrite
+            // 
+            this.rbOverwrite.AutoSize = true;
+            this.rbOverwrite.Location = new System.Drawing.Point(224, 338);
+            this.rbOverwrite.Name = "rbOverwrite";
+            this.rbOverwrite.Size = new System.Drawing.Size(122, 17);
+            this.rbOverwrite.TabIndex = 20;
+            this.rbOverwrite.TabStop = true;
+            this.rbOverwrite.Text = "Overwrite original file";
+            this.ttTooltip.SetToolTip(this.rbOverwrite, "Save to the original file, will be overwritten.");
+            this.rbOverwrite.UseVisualStyleBackColor = true;
+            this.rbOverwrite.CheckedChanged += new System.EventHandler(this.rbOverwrite_CheckedChanged);
+            // 
+            // rbSaveTo
+            // 
+            this.rbSaveTo.AutoSize = true;
+            this.rbSaveTo.Location = new System.Drawing.Point(434, 338);
+            this.rbSaveTo.Name = "rbSaveTo";
+            this.rbSaveTo.Size = new System.Drawing.Size(106, 17);
+            this.rbSaveTo.TabIndex = 21;
+            this.rbSaveTo.TabStop = true;
+            this.rbSaveTo.Text = "Save to following:";
+            this.ttTooltip.SetToolTip(this.rbSaveTo, "Save to a valid filename given in the following text box. New directories are not" +
+        " created.");
+            this.rbSaveTo.UseVisualStyleBackColor = true;
+            this.rbSaveTo.CheckedChanged += new System.EventHandler(this.rbSaveTo_CheckedChanged);
+            // 
+            // tbMapName
+            // 
+            this.tbMapName.Location = new System.Drawing.Point(97, 399);
+            this.tbMapName.Name = "tbMapName";
+            this.tbMapName.Size = new System.Drawing.Size(320, 20);
+            this.tbMapName.TabIndex = 24;
+            // 
+            // tbSaveTo
+            // 
+            this.tbSaveTo.Enabled = false;
+            this.tbSaveTo.Location = new System.Drawing.Point(12, 363);
+            this.tbSaveTo.Name = "tbSaveTo";
+            this.tbSaveTo.Size = new System.Drawing.Size(600, 20);
+            this.tbSaveTo.TabIndex = 22;
             // 
             // frmMapResize
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(584, 394);
+            this.ClientSize = new System.Drawing.Size(624, 442);
+            this.Controls.Add(this.tbSaveTo);
+            this.Controls.Add(this.rbSaveTo);
+            this.Controls.Add(this.rbOverwrite);
+            this.Controls.Add(this.rbNewFile);
+            this.Controls.Add(this.tbMapName);
+            this.Controls.Add(this.lblMapName);
             this.Controls.Add(this.cbLocalSizePos);
             this.Controls.Add(this.cbTilesCompress);
             this.Controls.Add(this.cbL0ClearTiles);
@@ -338,6 +416,12 @@
         private System.Windows.Forms.ToolTip ttTooltip;
         private System.Windows.Forms.CheckBox cbTilesCompress;
         private System.Windows.Forms.CheckBox cbLocalSizePos;
+        private System.Windows.Forms.Label lblMapName;
+        private System.Windows.Forms.TextBox tbMapName;
+        private System.Windows.Forms.RadioButton rbNewFile;
+        private System.Windows.Forms.RadioButton rbOverwrite;
+        private System.Windows.Forms.RadioButton rbSaveTo;
+        private System.Windows.Forms.TextBox tbSaveTo;
     }
 }
 

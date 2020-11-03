@@ -978,6 +978,17 @@ public class Map
 
 			section.Merge(sizeEntries);
 		}
+
+		if (!String.IsNullOrEmpty(options.MapName))
+		{
+			section = GetSection("Basic");
+			if (section != null)
+			{
+				Dictionary<string, string> basicEntries = new Dictionary<string, string>();
+				basicEntries.Add("Name", options.MapName);
+				section.Merge(basicEntries);
+			}
+		}
 	}
 
 	private void UpdateOverlaySections()
