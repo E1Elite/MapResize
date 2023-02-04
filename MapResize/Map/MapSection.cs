@@ -22,8 +22,20 @@ public class MapSection
 			{
 				if (isTypeList)
 				{
-					if (!String.IsNullOrEmpty(newEntry.Value) && !Entries.ContainsKey(newEntry.Key) && !Entries.ContainsValue(newEntry.Value))
-						Entries.Add(newEntry.Key, newEntry.Value);
+					if (!String.IsNullOrEmpty(newEntry.Value) && !Entries.ContainsValue(newEntry.Value))
+                    {
+                        if (Entries.ContainsKey(newEntry.Key))
+                        {
+                            int genKey = 100000;
+                            while (Entries.ContainsKey(genKey.ToString()))
+                                genKey++;
+    						Entries.Add(genKey.ToString(), newEntry.Value);
+                        }
+                        else
+                        {
+    						Entries.Add(newEntry.Key, newEntry.Value);
+                        }
+                    }
 					else
 						log.Info("Merge section skipping [" + Name + "] index: " + newEntry.Key + "=" + newEntry.Value);
 				}

@@ -21,6 +21,8 @@ public class MapParser
 			if (mapLines.Count > 0)
 			{
 				int lineIndex = 0;
+    			bool isTypeListSection = false;
+
 				while (lineIndex < mapLines.Count)
 				{
 					if (mapLines[lineIndex].IndexOf('[') == 0 && mapLines[lineIndex].IndexOf(']') > 1)
@@ -28,7 +30,8 @@ public class MapParser
 						MapSection currentSection = new MapSection();
 						Dictionary<string, string> sectionEntries = new Dictionary<string, string>();
 						currentSection.Name = mapLines[lineIndex].Substring(1, mapLines[lineIndex].IndexOf(']') - 1);
-						lineIndex++;
+                        isTypeListSection = MapConstants.TypesList.Contains(currentSection.Name);
+                        lineIndex++;
 						while (lineIndex < mapLines.Count && mapLines[lineIndex].IndexOf('[') < 0)
 						{
 							if (mapLines[lineIndex].IndexOf('=') > 0)
@@ -38,7 +41,7 @@ public class MapParser
 								string value = mapLines[lineIndex].Substring(indexOfEquals + 1, mapLines[lineIndex].Length - indexOfEquals - 1).Trim();
 								if (!String.IsNullOrEmpty(key))
 								{
-									if (MapConstants.TypesList.Contains(currentSection.Name))
+									if (isTypeListSection)
 									{
 										if (!String.IsNullOrEmpty(value) && !sectionEntries.ContainsKey(key) && !sectionEntries.ContainsValue(value))
 											sectionEntries.Add(key, value);

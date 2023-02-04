@@ -147,6 +147,12 @@ public class Map
 		InitializeTiles();
 
 		InitializeBaseNodes();
+
+        /* ToDo
+           Script actiob 4 - Move to cell with formula options:
+           Original (flawed): y * 128 + x
+           Patched: y * 1000 + x
+        */
 	}
 
 	private void InitializeAircrafts()
@@ -531,7 +537,7 @@ public class Map
 				byte heightLevel = mf.ReadByte();
 				byte iceGrowth = mf.ReadByte();
 
-				if (tileIndex >= 65535) tileIndex = 0; // Tile 0xFFFF used as empty/clear
+				if (tileIndex >= 65535) tileIndex = 0; // Tile 0xFFFF used as no tile, replace to clear / tile 0
 
 				if (rx < 512 && ry < 512)
 				{
